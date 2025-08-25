@@ -1,0 +1,189 @@
+/* 前台布局样式 */
+.frontend-layout {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  background: #f5f5f5;
+}
+
+/* 侧边栏 */
+.frontend-sidebar {
+  width: 280px;
+  min-width: 280px;
+  background: linear-gradient(180deg, #1890ff 0%, #096dd9 100%);
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  transition: all 0.3s ease;
+}
+
+/* 主内容区域 */
+.frontend-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.frontend-content {
+  flex: 1;
+  overflow: auto;
+  background: #f5f5f5;
+}
+
+/* 响应式设计 */
+@media (max-width: 1024px) {
+  .frontend-sidebar {
+    width: 240px;
+    min-width: 240px;
+  }
+}
+
+@media (max-width: 768px) {
+  .frontend-layout {
+    flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+  }
+  
+  .frontend-sidebar {
+    width: 100%;
+    min-width: auto;
+    height: auto;
+    min-height: auto;
+    position: relative;
+  }
+  
+  .frontend-main {
+    flex: 1;
+    min-height: calc(100vh - 200px);
+  }
+  
+  .frontend-content {
+    padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .frontend-content {
+    padding: 5px;
+  }
+}
+
+/* 滚动条样式 */
+.frontend-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.frontend-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.frontend-content::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.frontend-content::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* 页面过渡动画 */
+.frontend-content > * {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 加载状态 */
+.frontend-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #666;
+  font-size: 16px;
+}
+
+.frontend-loading::before {
+  content: '';
+  width: 20px;
+  height: 20px;
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #1890ff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-right: 10px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* 错误状态 */
+.frontend-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #ff4d4f;
+  text-align: center;
+  padding: 20px;
+}
+
+.frontend-error h3 {
+  margin: 0 0 10px 0;
+  font-size: 18px;
+}
+
+.frontend-error p {
+  margin: 0;
+  color: #666;
+  font-size: 14px;
+}
+
+/* 深色主题支持 */
+@media (prefers-color-scheme: dark) {
+  .frontend-layout {
+    background: #141414;
+  }
+  
+  .frontend-content {
+    background: #141414;
+  }
+  
+  .frontend-content::-webkit-scrollbar-track {
+    background: #2f2f2f;
+  }
+  
+  .frontend-content::-webkit-scrollbar-thumb {
+    background: #555;
+  }
+  
+  .frontend-content::-webkit-scrollbar-thumb:hover {
+    background: #777;
+  }
+  
+  .frontend-loading {
+    color: #ccc;
+  }
+  
+  .frontend-error {
+    color: #ff7875;
+  }
+  
+  .frontend-error p {
+    color: #999;
+  }
+}

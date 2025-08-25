@@ -1,0 +1,705 @@
+/* 前台收银系统样式 */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', 'Microsoft YaHei', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.frontend-cashier {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+/* 头部样式 */
+.cashier-header {
+  background-color: #4CAF50;
+  color: white;
+  padding: 20px 0;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.cashier-header h1 {
+  margin: 0;
+  font-size: 2.2rem;
+  font-weight: 500;
+}
+
+/* 主容器样式 */
+.cashier-container {
+  display: flex;
+  flex: 1;
+  padding: 10px 15px;
+  gap: 15px;
+  max-width: 100%;
+  margin: 0 auto;
+  height: calc(100vh - 130px);
+}
+
+/* 右侧商品区域 */
+.products-container {
+  flex: 3;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* 左侧结账区域 */
+.checkout-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  min-width: 350px;
+  max-width: 450px;
+}
+
+/* 会员区域 */
+.member-section {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.member-section h3 {
+  margin-bottom: 15px;
+  color: #333;
+  font-size: 1.4rem;
+  font-weight: 500;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+/* 搜索区域 */
+.search-section {
+  display: flex;
+  margin-bottom: 15px;
+  gap: 10px;
+}
+
+.search-section input {
+  flex: 1;
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px 0 0 4px;
+  font-size: 0.9rem;
+}
+
+.search-section button {
+  padding: 10px 15px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s;
+}
+
+.search-section button:hover {
+  background-color: #45a049;
+}
+
+.search-section button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* 搜索结果 */
+.search-results {
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+
+.search-result-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.search-result-item:last-child {
+  border-bottom: none;
+}
+
+.search-result-item:hover {
+  background-color: #f9f9f9;
+}
+
+.member-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.member-name {
+  font-weight: 500;
+  color: #333;
+}
+
+.member-phone {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.member-balance {
+  font-weight: 500;
+  color: #4CAF50;
+}
+
+/* 选中的会员 */
+.selected-member {
+  background-color: #f9f9f9;
+  border-radius: 4px;
+  padding: 15px;
+  border: 1px solid #eee;
+}
+
+.member-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.member-header h4 {
+  margin: 0;
+  color: #333;
+  font-size: 1.1rem;
+}
+
+.clear-btn {
+  background: none;
+  border: none;
+  color: #999;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0 5px;
+}
+
+.clear-btn:hover {
+  color: #f44336;
+}
+
+.member-details p {
+  margin: 5px 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.member-details i {
+  margin-right: 8px;
+  color: #4CAF50;
+  width: 16px;
+}
+
+/* 商品搜索 */
+.product-search {
+  margin-bottom: 20px;
+}
+
+.product-search input {
+  width: 100%;
+  padding: 14px 18px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1.1rem;
+}
+
+/* 分类按钮 */
+.categories {
+  margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.categories button {
+  padding: 10px 20px;
+  border: 1px solid #ddd;
+  background: white;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 1.1rem;
+}
+
+.categories button:hover {
+  border-color: #4CAF50;
+  color: #4CAF50;
+}
+
+.categories button.active {
+  background: #4CAF50;
+  color: white;
+  border-color: #4CAF50;
+}
+
+/* 商品区域 */
+.products-section {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 15px;
+}
+
+.product-item {
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 20px;
+  background: white;
+  transition: all 0.2s;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+}
+
+.product-item:hover {
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+  transform: translateY(-2px);
+}
+
+.product-item h4 {
+  margin: 0 0 12px 0;
+  color: #333;
+  font-size: 1.1rem;
+  height: 48px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.product-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.product-details p {
+  margin: 0;
+  color: #4CAF50;
+  font-weight: 500;
+  font-size: 1.2rem;
+}
+
+.add-to-cart-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 2px 5px rgba(76, 175, 80, 0.3);
+  font-size: 1.2rem;
+}
+
+.add-to-cart-btn:hover {
+  background: #45a049;
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(76, 175, 80, 0.4);
+}
+
+/* 购物车 */
+.cart-section {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.cart-section h3 {
+  margin-bottom: 15px;
+  color: #333;
+  font-size: 1.4rem;
+  font-weight: 500;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+.empty-cart {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+  padding: 30px 0;
+}
+
+.empty-cart i {
+  font-size: 3.5rem;
+  margin-bottom: 15px;
+  color: #e0e0e0;
+}
+
+.cart-items {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 15px;
+}
+
+.cart-item {
+  padding: 15px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.cart-item:last-child {
+  border-bottom: none;
+}
+
+.item-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.item-name {
+  font-weight: 500;
+  color: #333;
+  font-size: 1.1rem;
+}
+
+.item-price {
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.item-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.quantity-control {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.quantity-control button {
+  width: 28px;
+  height: 28px;
+  border: 1px solid #e0e0e0;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.quantity-control button:hover {
+  background-color: #f5f5f5;
+  border-color: #ccc;
+}
+
+.quantity-control span {
+  width: 36px;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.item-subtotal {
+  font-weight: 500;
+  color: #4CAF50;
+}
+
+.remove-btn {
+  background: none;
+  border: none;
+  color: #999;
+  cursor: pointer;
+  padding: 5px;
+  transition: color 0.2s;
+}
+
+.remove-btn:hover {
+  color: #f44336;
+}
+
+.cart-summary {
+  border-top: 1px solid #eee;
+  padding-top: 15px;
+}
+
+.cart-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+}
+
+.cart-total strong {
+  color: #4CAF50;
+  font-size: 1.3rem;
+}
+
+.cart-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.cart-actions button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 500;
+}
+
+.clear-cart-btn {
+  flex: 1;
+  background-color: #f44336;
+  color: white;
+  box-shadow: 0 2px 5px rgba(244, 67, 54, 0.3);
+}
+
+.clear-cart-btn:hover {
+  background-color: #e53935;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(244, 67, 54, 0.4);
+}
+
+.checkout-btn {
+  flex: 2;
+  background-color: #4CAF50;
+  color: white;
+  box-shadow: 0 2px 5px rgba(76, 175, 80, 0.3);
+  padding: 15px 0;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.checkout-btn:hover {
+  background-color: #45a049;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(76, 175, 80, 0.4);
+}
+
+.checkout-btn:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+}
+
+/* 消息提示 */
+.message {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 15px 25px;
+  border-radius: 8px;
+  color: white;
+  font-size: 0.95rem;
+  z-index: 1000;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+  animation: slideIn 0.3s ease-out;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.message.success {
+  background-color: #4CAF50;
+}
+
+.message.success:before {
+  content: '\f00c';
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+}
+
+.message.error {
+  background-color: #f44336;
+}
+
+.message.error:before {
+  content: '\f071';
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* 外部搜索框样式 */
+.outer-search-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background-color: white;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  margin-bottom: 5px;
+  width: 100%;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 15px;
+}
+
+.member-search-outer, .product-search-outer {
+  display: flex;
+  align-items: center;
+  width: 48%;
+  position: relative;
+}
+
+.member-search-outer input, .product-search-outer input {
+  width: 100%;
+  padding: 12px 18px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  transition: all 0.3s;
+  background-color: #f9f9f9;
+}
+
+.member-search-outer input:focus, .product-search-outer input:focus {
+  border-color: #4CAF50;
+  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+  outline: none;
+  background-color: white;
+}
+
+.member-search-outer button {
+  margin-left: 10px;
+  padding: 12px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 2px 5px rgba(76, 175, 80, 0.3);
+}
+
+.member-search-outer button:hover {
+  background-color: #45a049;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(76, 175, 80, 0.4);
+}
+
+.member-search-outer button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.product-search-outer {
+  position: relative;
+}
+
+.search-icon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #999;
+  font-size: 1rem;
+}
+
+/* 响应式设计 */
+@media (max-width: 1024px) {
+  .outer-search-container {
+    flex-direction: column;
+    gap: 15px;
+    padding: 12px 15px;
+  }
+  
+  .member-search-outer, .product-search-outer {
+    width: 100%;
+  }
+  
+  .cashier-container {
+    flex-direction: column-reverse;
+    height: auto;
+  }
+  
+  .products-container,
+  .checkout-container {
+    max-width: 100%;
+  }
+  
+  .products-container {
+    height: 500px;
+  }
+  
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .cashier-container {
+    padding: 10px;
+  }
+  
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  }
+  
+  .cart-actions {
+    flex-direction: column;
+  }
+  
+  .clear-cart-btn,
+  .checkout-btn {
+    width: 100%;
+  }
+}

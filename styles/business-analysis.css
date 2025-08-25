@@ -1,0 +1,263 @@
+/* 营业分析页面样式 */
+.business-analysis {
+  padding: 20px;
+  background-color: #f5f5f5;
+  min-height: 10vh;
+}
+
+/* 页面头部样式已移至 global-enhancement.css 统一管理 */
+
+/* 汇总统计卡片 */
+.summary-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.summary-card {
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.summary-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.card-content {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+}
+
+.card-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16px;
+  font-size: 24px;
+  color: white;
+}
+
+.card-icon.new-members {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.card-icon.total-members {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.card-icon.recharge {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.card-icon.consume {
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+}
+
+.card-icon.profit.positive {
+  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+}
+
+.card-icon.profit.negative {
+  background: linear-gradient(135deg, #fc466b 0%, #3f5efb 100%);
+}
+
+.card-info h3 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+.card-info p {
+  margin: 4px 0 0 0;
+  color: #7f8c8d;
+  font-size: 14px;
+}
+
+/* 图表区域 */
+.charts-section {
+  margin-bottom: 24px;
+}
+
+.chart-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.chart-card {
+  flex: 1;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: none;
+}
+
+.chart-card.half-width {
+  flex: 0 0 calc(50% - 8px);
+}
+
+.chart-card .ant-card-head {
+  border-bottom: 1px solid #f0f0f0;
+  padding: 16px 24px;
+}
+
+.chart-card .ant-card-head-title {
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.chart-card .ant-card-body {
+  padding: 24px;
+}
+
+/* 表格区域 */
+.tables-section {
+  margin-bottom: 24px;
+}
+
+.tables-section .ant-card {
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: none;
+}
+
+.tables-section .ant-table {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.tables-section .ant-table-thead > tr > th {
+  background-color: #fafafa;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+/* 导出区域 */
+.export-section .ant-card {
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: none;
+}
+
+.export-section .ant-space {
+  width: 100%;
+}
+
+.export-section .ant-btn {
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+/* 文本颜色 */
+.text-success {
+  color: #52c41a !important;
+}
+
+.text-danger {
+  color: #ff4d4f !important;
+}
+
+/* 响应式设计 */
+@media (max-width: 1200px) {
+  .chart-row {
+    flex-direction: column;
+  }
+  
+  .chart-card.half-width {
+    flex: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .business-analysis {
+    padding: 16px;
+  }
+  
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  
+  .summary-cards {
+    grid-template-columns: 1fr;
+  }
+  
+  .card-content {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .card-icon {
+    margin-right: 0;
+    margin-bottom: 12px;
+  }
+  
+  .export-section .ant-space {
+    flex-direction: column;
+  }
+  
+  .export-section .ant-btn {
+    width: 100%;
+  }
+}
+
+/* 加载状态 */
+.ant-spin-container {
+  min-height: 200px;
+}
+
+/* 卡片动画 */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.summary-card {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.summary-card:nth-child(1) { animation-delay: 0.1s; }
+.summary-card:nth-child(2) { animation-delay: 0.2s; }
+.summary-card:nth-child(3) { animation-delay: 0.3s; }
+.summary-card:nth-child(4) { animation-delay: 0.4s; }
+.summary-card:nth-child(5) { animation-delay: 0.5s; }
+
+.chart-card {
+  animation: fadeInUp 0.6s ease-out;
+  animation-delay: 0.6s;
+}
+
+/* 自定义滚动条 */
+.business-analysis ::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.business-analysis ::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.business-analysis ::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.business-analysis ::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}

@@ -1,0 +1,144 @@
+.member-list-container {
+  padding: 20px;
+}
+
+.member-table th {
+  font-weight: 600;
+  color: var(--bs-gray-700);
+  background-color: var(--bs-gray-100);
+  border-bottom: 2px solid var(--bs-gray-200);
+}
+
+.member-table td {
+  vertical-align: middle;
+}
+
+.member-status-active {
+  background-color: var(--bs-success);
+  color: white;
+}
+
+.member-status-inactive {
+  background-color: var(--bs-gray-500);
+  color: white;
+}
+
+.member-level-gold {
+  background-color: #ffc107;
+  color: #212529;
+}
+
+.member-level-silver {
+  background-color: #adb5bd;
+  color: white;
+}
+
+.member-level-bronze {
+  background-color: #cd7f32;
+  color: white;
+}
+
+.member-level-platinum {
+  background-color: #e5e4e2;
+  color: #212529;
+}
+
+.member-level-diamond {
+  background-color: #b9f2ff;
+  color: #212529;
+}
+
+/* 表格行动画效果 */
+.member-table tbody tr {
+  transition: all 0.3s ease;
+}
+
+.member-table tbody tr:hover {
+  background-color: rgba(0, 123, 255, 0.05) !important;
+  transform: translateX(5px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 操作按钮组美化 */
+.btn-group .btn {
+  transition: all 0.3s ease;
+  border-radius: 6px !important;
+  margin: 0 2px;
+}
+
+.btn-group .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* 批量操作区域美化 */
+.alert-info {
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(33, 150, 243, 0.1);
+}
+
+/* 搜索和筛选区域美化 */
+.card {
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* 徽章动画效果 */
+.badge {
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+.badge:hover {
+  transform: scale(1.05);
+}
+
+/* 加载状态美化 */
+.spinner-border {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.member-level-black {
+  background-color: #343a40;
+  color: white;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  color: var(--bs-gray-600);
+}
+
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  min-height: 300px;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .member-table {
+    font-size: 0.875rem;
+  }
+  
+  .btn-group .btn {
+    padding: 0.25rem 0.5rem;
+  }
+}

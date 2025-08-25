@@ -1,0 +1,149 @@
+/* 全局样式 */
+:root {
+  --primary-color: #3498db;
+  --secondary-color: #2ecc71;
+  --danger-color: #e74c3c;
+  --warning-color: #f39c12;
+  --dark-color: #2c3e50;
+  --light-color: #ecf0f1;
+  --border-radius: 8px;
+  --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --transition: all 0.3s ease;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+.app-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.content-container {
+  flex: 1;
+  padding: 20px;
+  transition: var(--transition);
+}
+
+.card {
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  border: none;
+  margin-bottom: 20px;
+  transition: var(--transition);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+  background-color: #fff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  font-weight: 600;
+  border-top-left-radius: var(--border-radius);
+  border-top-right-radius: var(--border-radius);
+}
+
+.btn {
+  border-radius: var(--border-radius);
+  padding: 8px 16px;
+  transition: var(--transition);
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.btn-success {
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
+}
+
+.btn-danger {
+  background-color: var(--danger-color);
+  border-color: var(--danger-color);
+}
+
+.table {
+  box-shadow: var(--box-shadow);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+}
+
+.form-control {
+  border-radius: var(--border-radius);
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+}
+
+.form-control:focus {
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.25);
+  border-color: var(--primary-color);
+}
+
+.page-title {
+  margin-bottom: 25px;
+  color: var(--dark-color);
+  font-weight: 600;
+  border-left: 5px solid var(--primary-color);
+  padding-left: 15px;
+}
+
+.badge {
+  padding: 6px 10px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+.member-status-active {
+  background-color: var(--secondary-color);
+}
+
+.member-status-inactive {
+  background-color: var(--danger-color);
+}
+
+.member-level-gold {
+  background-color: #f1c40f;
+  color: #333;
+}
+
+.member-level-silver {
+  background-color: #bdc3c7;
+  color: #333;
+}
+
+.member-level-bronze {
+  background-color: #cd7f32;
+  color: white;
+}
+
+.member-level-platinum {
+  background-color: #95a5a6;
+  color: white;
+}
+
+.member-level-diamond {
+  background-color: #9b59b6;
+  color: white;
+}
+
+.member-level-black {
+  background-color: #34495e;
+  color: white;
+}

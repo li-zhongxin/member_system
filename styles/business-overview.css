@@ -1,0 +1,204 @@
+/* 营业概况样式 */
+.business-overview {
+  margin-bottom: 2rem;
+}
+
+.business-overview .section-title {
+  color: #2c3e50;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+/* 营业概况统计卡片 */
+.business-overview .stat-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 15px;
+  padding: 1.5rem;
+  color: white;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  border: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.business-overview .stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+.business-overview .stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.business-overview .stat-card.new-members {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.business-overview .stat-card.total-members {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.business-overview .stat-card.recharge-amount {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.business-overview .stat-card.consume-amount {
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+}
+
+.business-overview .stat-card-body {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.business-overview .stat-card-icon {
+  font-size: 2.5rem;
+  opacity: 0.8;
+  min-width: 60px;
+}
+
+.business-overview .stat-card-info h5 {
+  margin: 0;
+  font-size: 0.9rem;
+  opacity: 0.9;
+  font-weight: 500;
+}
+
+.business-overview .stat-card-info h2 {
+  margin: 0.5rem 0 0 0;
+  font-size: 2rem;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* 时间范围按钮组 */
+.business-overview .btn-group .btn {
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.business-overview .btn-group .btn:first-child {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.business-overview .btn-group .btn:last-child {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.business-overview .btn-group .btn:not(:first-child):not(:last-child) {
+  border-radius: 0;
+}
+
+.business-overview .btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.business-overview .btn-outline-primary {
+  color: #667eea;
+  border-color: #667eea;
+  background: transparent;
+}
+
+.business-overview .btn-outline-primary:hover {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-color: #667eea;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+/* 图表卡片 */
+.business-overview .card {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.business-overview .card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+}
+
+.business-overview .card-body {
+  padding: 1.5rem;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .business-overview .stat-card {
+    margin-bottom: 1rem;
+  }
+  
+  .business-overview .stat-card-info h2 {
+    font-size: 1.5rem;
+  }
+  
+  .business-overview .btn-group {
+    width: 100%;
+  }
+  
+  .business-overview .btn-group .btn {
+    flex: 1;
+  }
+}
+
+/* 加载动画 */
+.business-overview .spinner-border {
+  width: 2rem;
+  height: 2rem;
+}
+
+/* 图表容器 */
+.business-overview .chart-container {
+  position: relative;
+  height: 300px;
+}
+
+/* 动画效果 */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.business-overview .stat-card {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.business-overview .stat-card:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.business-overview .stat-card:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.business-overview .stat-card:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.business-overview .stat-card:nth-child(4) {
+  animation-delay: 0.4s;
+}

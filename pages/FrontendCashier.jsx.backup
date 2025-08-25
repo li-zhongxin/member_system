@@ -1,0 +1,450 @@
+import React, { useState, useEffect } from 'react';
+import ApiService from '../services/apiService';
+import productService from '../services/productService';
+import LoadingSpinner from '../components/LoadingSpinner';
+import '../styles/frontend-cashier.css';
+import '../styles/global-enhancement.css';
+
+function FrontendCashier() {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const [selectedMember, setSelectedMember] = useState(null);
+  const [isSearching, setIsSearching] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [message, setMessage] = useState({ type: '', text: '' });
+  
+  // 商品相关状态
+  const [products, setProducts] = useState([]);
+  const [selectedProducts, setSelectedProducts] = useState([]);
+  const [isLoadingProducts, setIsLoadingProducts] = useState(false);
+  const [productSearchTerm, setProductSearchTerm] = useState('');
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [activeCategory, setActiveCategory] = useState('全部');
+
+  // 加载商品列表
+  useEffect(() => {
+    loadProducts();
+  }, []);
+
+  // 商品搜索过滤
+  useEffect(() => {
+    let filtered = products;
+    
+    // 按分类过滤
+    if (activeCategory !== '全部') {
+      filtered = filtered.filter(product => 
+        product.fields.kind === activeCategory
+      );
+    }
+    
+    // 按搜索词过滤
+    if (productSearchTerm.trim()) {
+      filtered = filtered.filter(product => 
+        product.fields.name?.toLowerCase().includes(productSearchTerm.toLowerCase()) ||
+        product.fields.kind?.toLowerCase().includes(productSearchTerm.toLowerCase())
+      );
+    }
+    
+    setFilteredProducts(filtered);
+  }, [products, activeCategory, productSearchTerm]);
+
+  const loadProducts = async () => {
+    setIsLoadingProducts(true);
+    try {
+      const response = await productService.getAllProducts();
+      if (response.success) {
+        setProducts(response.data);
+        setFilteredProducts(response.data);
+      } else {
+        showMessage('加载商品失败', 'error');
+      }
+    } catch (error) {
+      console.error('加载商品时出错:', error);
+      showMessage('加载商品时出错', 'error');
+    } finally {
+      setIsLoadingProducts(false);
+    }
+  };
+
+  const handleSearch = async () => {
+    if (!searchTerm.trim()) {
+      showMessage('请输入搜索内容', 'error');
+      return;
+    }
+
+    setIsSearching(true);
+    try {
+      const response = await ApiService.searchMembers(searchTerm);
+      if (response.success) {
+        setSearchResults(response.data);
+        if (response.data.length === 0) {
+          showMessage('未找到相关会员', 'error');
+        }
+      } else {
+        showMessage('搜索失败', 'error');
+      }
+    } catch (error) {
+      console.error('搜索时出错:', error);
+      showMessage('搜索时出错', 'error');
+    } finally {
+      setIsSearching(false);
+    }
+  };
+
+  const selectMember = (member) => {
+    setSelectedMember(member);
+    setSearchResults([]);
+    setSearchTerm('');
+  };
+
+  const addProduct = (product) => {
+    const existingProduct = selectedProducts.find(p => p.id === product.id);
+    if (existingProduct) {
+      setSelectedProducts(selectedProducts.map(p => 
+        p.id === product.id 
+          ? { ...p, quantity: p.quantity + 1 }
+          : p
+      ));
+    } else {
+      setSelectedProducts([...selectedProducts, { ...product, quantity: 1 }]);
+    }
+  };
+
+  const removeProduct = (productId) => {
+    setSelectedProducts(selectedProducts.filter(p => p.id !== productId));
+  };
+
+  const updateProductQuantity = (productId, quantity) => {
+    if (quantity <= 0) {
+      removeProduct(productId);
+      return;
+    }
+    setSelectedProducts(selectedProducts.map(p => 
+      p.id === productId 
+        ? { ...p, quantity }
+        : p
+    ));
+  };
+
+  const calculateTotal = () => {
+    return selectedProducts.reduce((total, product) => {
+      const price = parseFloat(product.fields.member_price || product.fields.price || 0);
+      return total + (price * product.quantity);
+    }, 0);
+  };
+
+  const handleCheckout = async () => {
+    if (!selectedMember) {
+      showMessage('请先选择会员', 'error');
+      return;
+    }
+
+    if (selectedProducts.length === 0) {
+      showMessage('请先选择商品', 'error');
+      return;
+    }
+
+    const total = calculateTotal();
+    const currentBalance = parseFloat(selectedMember.fields.balance || 0);
+
+    if (currentBalance < total) {
+      showMessage('会员余额不足，请先充值', 'error');
+      return;
+    }
+
+    setIsProcessing(true);
+    try {
+      // 扣除余额
+      const newBalance = currentBalance - total;
+      const updateResponse = await ApiService.updateMember(selectedMember.id, {
+        balance: newBalance
+      });
+
+      if (updateResponse.success) {
+        // 记录消费
+        const consumeResponse = await ApiService.recordConsumption({
+          member_id: selectedMember.id,
+          member_name: selectedMember.fields.name,
+          amount: total,
+          products: selectedProducts.map(p => ({
+            name: p.fields.name,
+            quantity: p.quantity,
+            price: parseFloat(p.fields.member_price || p.fields.price || 0)
+          })),
+          balance_before: currentBalance,
+          balance_after: newBalance
+        });
+
+        if (consumeResponse.success) {
+          showMessage(`结账成功！消费金额：${total.toFixed(2)}元，余额：${newBalance.toFixed(2)}元`, 'success');
+          // 更新选中会员的余额
+          setSelectedMember({
+            ...selectedMember,
+            fields: {
+              ...selectedMember.fields,
+              balance: newBalance
+            }
+          });
+          // 清空购物车
+          setSelectedProducts([]);
+        } else {
+          showMessage('记录消费失败', 'error');
+        }
+      } else {
+        showMessage('更新余额失败', 'error');
+      }
+    } catch (error) {
+      console.error('结账时出错:', error);
+      showMessage('结账时出错', 'error');
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  const showMessage = (text, type) => {
+    setMessage({ text, type });
+    setTimeout(() => setMessage({ text: '', type: '' }), 3000);
+  };
+
+  const clearCart = () => {
+    setSelectedProducts([]);
+  };
+
+  const clearMember = () => {
+    setSelectedMember(null);
+    setSearchResults([]);
+    setSearchTerm('');
+  };
+
+  const categories = ['全部', '饮品', '小食', '套餐', '其他'];
+
+  return (
+    <div className="frontend-cashier">
+      {/* 左侧蓝色导航栏 */}
+      <div className="sidebar">
+        <div className="sidebar-header">
+          <h2>前台收银系统</h2>
+          <div className="system-info">
+            <p>管理：店长管理员</p>
+            <p>2024/08/25 17:37:37</p>
+          </div>
+        </div>
+        
+        <div className="nav-menu">
+          <div className="nav-item active">
+            <div className="nav-icon">💰</div>
+            <div className="nav-content">
+              <span className="nav-title">收银</span>
+              <span className="nav-subtitle">商品销售收银</span>
+            </div>
+          </div>
+          
+          <div className="nav-item">
+            <div className="nav-icon">💳</div>
+            <div className="nav-content">
+              <span className="nav-title">充值</span>
+              <span className="nav-subtitle">会员充值服务</span>
+            </div>
+          </div>
+          
+          <div className="nav-item">
+            <div className="nav-icon">👤</div>
+            <div className="nav-content">
+              <span className="nav-title">办卡</span>
+              <span className="nav-subtitle">会员开卡办理</span>
+            </div>
+          </div>
+        </div>
+        
+        <div className="sidebar-footer">
+          <div className="system-status">
+            <p>🔗 系统在线</p>
+            <p>💾 数据同步：管理端</p>
+          </div>
+          
+          <div className="quick-actions">
+            <p>🔍 切换到：行政管理</p>
+          </div>
+        </div>
+      </div>
+      
+      {/* 右侧主要内容区域 */}
+      <div className="main-content">
+        {/* 顶部标题栏 */}
+        <div className="top-header">
+          <h1>前台收银系统</h1>
+          <div className="header-info">
+            <span>管理：店长管理员</span>
+            <span>2024/08/25 17:37:37</span>
+          </div>
+        </div>
+        
+        {/* 搜索栏区域 */}
+        <div className="search-section">
+          <div className="search-row">
+            <div className="search-group member-search">
+              <div className="search-icon">📱</div>
+              <input
+                type="text"
+                className="search-input"
+                placeholder="请输入会员姓名或手机号"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+              />
+              <button 
+                className="search-btn" 
+                onClick={handleSearch}
+                disabled={isSearching}
+              >
+                {isSearching ? '搜索中...' : '搜索'}
+              </button>
+            </div>
+            
+            <div className="search-group product-search">
+              <div className="search-icon">🔍</div>
+              <input
+                type="text"
+                className="search-input"
+                placeholder="请输入商品编码或名称"
+                value={productSearchTerm}
+                onChange={(e) => setProductSearchTerm(e.target.value)}
+              />
+            </div>
+            
+            <button className="add-product-btn">
+              添加商品
+            </button>
+          </div>
+        </div>
+        
+        {/* 主要内容区域 */}
+        <div className="content-wrapper">
+          {/* 会员信息区域 */}
+          <div className="member-info-section">
+            <h3>会员信息</h3>
+            {selectedMember ? (
+              <div className="member-card">
+                <div className="member-header">
+                  <span className="member-label">会员</span>
+                  <button className="close-btn" onClick={clearMember}>×</button>
+                </div>
+                <div className="member-details">
+                  <div className="member-row">
+                    <span className="label">姓名:</span>
+                    <span className="value">{selectedMember.fields.name}</span>
+                  </div>
+                  <div className="member-row">
+                    <span className="label">金额:</span>
+                    <span className="value">{parseFloat(selectedMember.fields.balance || 0).toFixed(0)}元</span>
+                  </div>
+                  <div className="member-row">
+                    <span className="label">余额:</span>
+                    <span className="value">{parseFloat(selectedMember.fields.balance || 0).toFixed(0)}元</span>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="member-placeholder">
+                <p>请搜索并选择会员</p>
+              </div>
+            )}
+          </div>
+          
+          {/* 商品选择区域 */}
+          <div className="products-section">
+            <h3>商品选择</h3>
+            
+            {/* 分类标签 */}
+            <div className="category-tabs">
+              {categories.map(category => (
+                <button
+                  key={category}
+                  className={`category-tab ${activeCategory === category ? 'active' : ''}`}
+                  onClick={() => setActiveCategory(category)}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
+            
+            {/* 商品网格 */}
+            {isLoadingProducts ? (
+              <LoadingSpinner />
+            ) : (
+              <div className="products-grid">
+                {filteredProducts.map(product => (
+                  <div key={product.id} className="product-card">
+                    <div className="product-image">
+                      <div className="product-icon">📦</div>
+                    </div>
+                    <div className="product-info">
+                      <div className="product-name">{product.fields.name}</div>
+                      <div className="product-spec">规格: {product.fields.spec || '标准'}</div>
+                      <div className="product-price">￥{parseFloat(product.fields.member_price || product.fields.price || 0).toFixed(0)}</div>
+                    </div>
+                    <button 
+                      className="add-btn"
+                      onClick={() => addProduct(product)}
+                    >
+                      +
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+            
+            {/* 购物车统计和操作按钮 */}
+            <div className="cart-section">
+              <div className="cart-summary">
+                <div className="summary-item">
+                  <span className="summary-label">数量:</span>
+                  <span className="summary-value">{selectedProducts.reduce((total, product) => total + product.quantity, 0)}</span>
+                </div>
+                <div className="summary-item">
+                  <span className="summary-label">金额:</span>
+                  <span className="summary-value">{calculateTotal().toFixed(0)}元</span>
+                </div>
+                <div className="summary-item">
+                  <span className="summary-label">优惠:</span>
+                  <span className="summary-value">0元</span>
+                </div>
+              </div>
+              
+              <div className="action-buttons">
+                <button className="action-btn clear-btn" onClick={clearCart}>清空</button>
+                <button className="action-btn save-btn">收藏</button>
+                <button className="action-btn checkout-btn" onClick={handleCheckout} disabled={isProcessing || !selectedMember}>
+                  {isProcessing ? '处理中...' : '结账'}
+                </button>
+                <button className="action-btn pending-btn">挂单</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      {/* 搜索结果 */}
+      {searchResults.length > 0 && (
+        <div className="search-results">
+          {searchResults.map(member => (
+            <div key={member.id} className="search-result-item" onClick={() => selectMember(member)}>
+              <span>{member.fields.name}</span>
+              <span>{member.fields.phone}</span>
+              <span>余额: {parseFloat(member.fields.balance || 0).toFixed(2)}元</span>
+            </div>
+          ))}
+        </div>
+      )}
+      
+      {/* 消息提示 */}
+      {message.text && (
+        <div className={`message ${message.type}`}>
+          {message.text}
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default FrontendCashier;

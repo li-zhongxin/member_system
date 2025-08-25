@@ -1,0 +1,345 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
+  border-radius: var(--border-radius);
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.sidebar-toggle {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: var(--dark-color);
+  margin-right: 15px;
+  padding: 5px;
+  border-radius: 5px;
+  transition: var(--transition);
+}
+
+.sidebar-toggle:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.navbar-left h4 {
+  margin: 0;
+  color: var(--dark-color);
+  font-weight: 600;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* 切换到前台按钮样式 */
+.switch-frontend-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: linear-gradient(135deg, #52c41a, #73d13d);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  box-shadow: 0 2px 4px rgba(82, 196, 26, 0.2);
+}
+
+.switch-frontend-btn:hover {
+  background: linear-gradient(135deg, #73d13d, #95de64);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(82, 196, 26, 0.3);
+  color: white;
+}
+
+.switch-frontend-btn i {
+  font-size: 16px;
+}
+
+.switch-frontend-btn span {
+  font-size: 14px;
+}
+
+.search-box {
+  display: flex;
+  margin-right: 20px;
+  position: relative;
+  flex: 1;
+  max-width: 600px;
+}
+
+.search-box input {
+  padding: 8px 15px;
+  border-radius: 20px;
+  border: 1px solid #ddd;
+  width: 100%;
+  min-width: 300px;
+  transition: var(--transition);
+}
+
+.search-box input:focus {
+  border-color: var(--primary-color);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.25);
+}
+
+.search-box button {
+  background: none;
+  border: none;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #777;
+  cursor: pointer;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.user-profile img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+  object-fit: cover;
+  border: 2px solid var(--primary-color);
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.user-profile {
+  position: relative;
+}
+
+.user-profile span {
+  font-weight: 500;
+  color: var(--dark-color);
+}
+
+.user-profile:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+  padding: 8px 12px;
+  transition: var(--transition);
+}
+
+.user-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  min-width: 180px;
+  z-index: 1000;
+  margin-top: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.user-menu-item {
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: var(--transition);
+  color: var(--dark-color);
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+}
+
+.user-menu-item:hover {
+  background-color: rgba(52, 152, 219, 0.1);
+  color: var(--primary-color);
+}
+
+.user-menu-item:first-child {
+  border-radius: 8px 8px 0 0;
+}
+
+.user-menu-item:last-child {
+  border-radius: 0 0 8px 8px;
+}
+
+.user-menu-divider {
+  margin: 0;
+  border: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.logout-item {
+  color: #dc3545;
+}
+
+.logout-item:hover {
+  background-color: rgba(220, 53, 69, 0.1);
+  color: #dc3545;
+}
+
+/* 点击外部关闭菜单 */
+.user-profile.active {
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+/* 搜索结果下拉框样式 */
+.search-results-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  margin-top: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  animation: slideDown 0.2s ease-out;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.search-result-item {
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: var(--transition);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.search-result-item:hover {
+  background-color: rgba(52, 152, 219, 0.1);
+}
+
+.search-result-item:last-child {
+  border-bottom: none;
+}
+
+.result-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.result-name {
+  font-weight: 600;
+  color: var(--dark-color);
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+
+.result-phone {
+  font-size: 12px;
+  color: #666;
+}
+
+.result-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.result-level {
+  font-size: 12px;
+  color: var(--primary-color);
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.result-status {
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 10px;
+  font-weight: 500;
+}
+
+.result-status.active {
+  background-color: rgba(40, 167, 69, 0.1);
+  color: #28a745;
+}
+
+.result-status.inactive {
+  background-color: rgba(220, 53, 69, 0.1);
+  color: #dc3545;
+}
+
+.search-result-footer {
+  padding: 8px 16px;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.view-all-btn {
+  width: 100%;
+  padding: 8px;
+  background: none;
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: var(--transition);
+}
+
+.view-all-btn:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.no-results {
+  padding: 20px;
+  text-align: center;
+  color: #666;
+}
+
+.no-results i {
+  font-size: 24px;
+  margin-bottom: 8px;
+  display: block;
+  color: #ccc;
+}
+
+.no-results span {
+  font-size: 14px;
+}
